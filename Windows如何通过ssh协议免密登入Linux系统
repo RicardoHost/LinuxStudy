@@ -1,0 +1,23 @@
+# Windows如何通过ssh协议免密登入Linux系统
+
+1.Windows本地需要生成ssh密钥对
+
+ssh-keygen 该指令默认会在C:CurrentUser目录下生成一个.ssh目录，里面包含一个rsa(私钥)与rsa.pub(公钥)文件
+
+2.上传rsa.pub(公钥)到Linux指定用户下面的authorized_keys中
+
+root用户:
+(1).执行vim ~/.ssh/authorized_keys
+(2).将Windows本地rsa.pub文件内容复制到authorized_keys文件中
+
+普通用户:
+(1).vim /home/username/.ssh/authorized_keys(新建普通用户可能没有.ssh目录需要手动创建)
+(2.将Windows本地rsa.pub文件内容复制到authorized_keys文件中
+(3).设置.ssh与authorized_keys的权限,如下:
+    chmod 700 .ssh
+    chmod 600 authorized_keys
+
+3.重启ssh服务/实例
+
+最后执行 ssh root@ip  /  ssh username@ip 
+如果成功登入说明配置成功
